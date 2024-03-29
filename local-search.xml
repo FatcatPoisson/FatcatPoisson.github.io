@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>多维数据挖掘6-9</title>
+    <link href="/2024/03/27/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%986-9/"/>
+    <url>/2024/03/27/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%986-9/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Chapter-06-Hierarchical-Clustering"><a href="#Chapter-06-Hierarchical-Clustering" class="headerlink" title="Chapter 06. Hierarchical Clustering"></a>Chapter 06. Hierarchical Clustering</h2><h3 id="1-Definition："><a href="#1-Definition：" class="headerlink" title="1.Definition："></a>1.Definition：</h3><p>Produces a set of nested clusters organized as a hierarchical tree.</p><p>A tree like diagram that records the sequences of merges or splits.</p><h3 id="2-Strengths"><a href="#2-Strengths" class="headerlink" title="2. Strengths:"></a>2. Strengths:</h3><p>Do not have to assume any particular number of clusters.</p><p>They may correspond to meaningful taxonomies.</p><h3 id="3-two-main-types"><a href="#3-two-main-types" class="headerlink" title="3.two main types:"></a>3.two main types:</h3><p>Agglomerative:<br> Start with the points as individual clusters<br> At each step, merge the closest pair of clusters until only one cluster (or k clusters) left</p><p>Divisive:<br> Start with one, all-inclusive cluster<br> At each step, split a cluster until each cluster contains an individual point (or there are k clusters)</p><h3 id="4-Traditional-hierarchical-algorithms-use-a-similarity-or-distance-matrix"><a href="#4-Traditional-hierarchical-algorithms-use-a-similarity-or-distance-matrix" class="headerlink" title="4.Traditional hierarchical algorithms use a similarity or distance matrix"></a>4.Traditional hierarchical algorithms use a similarity or distance matrix</h3><p>Merge or split one cluster at a time</p><h3 id="5-Agglomerative-Clustering-Algorithm"><a href="#5-Agglomerative-Clustering-Algorithm" class="headerlink" title="5. Agglomerative Clustering Algorithm"></a>5. Agglomerative Clustering Algorithm</h3><p><strong>key idea:</strong> </p><p>Successively merge closest clusters.</p><p><strong>Basic algorithm:</strong></p><p><img src="F:\hexo_install\hexo-blog\source_posts\多维数据挖掘6-9\agglomerative_basic_alg.png"></p><p><strong>key operation:</strong></p><p> the computation of the proximity of two clusters</p><h3 id="6-Inter-Cluster-Distance"><a href="#6-Inter-Cluster-Distance" class="headerlink" title="6. Inter-Cluster Distance"></a>6. Inter-Cluster Distance</h3><h4 id="6-1-MIN-or-Single-Link"><a href="#6-1-MIN-or-Single-Link" class="headerlink" title="6.1 MIN or Single Link"></a>6.1 MIN or Single Link</h4><p><strong>Definition: Proximity of two clusters is based on the two closest points in the different clusters.</strong></p><p>​Determined by one pair of points, i.e., by one link in the proximity graph</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\MIN or single link.png" style="zoom:50%;" /><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\MIN or single link 2.png" style="zoom:50%;" /><p><strong>strength:</strong> Can handle non-elliptical shapes  (能处理非椭圆形状)</p><p><strong>limitation:</strong>  Sensitive to noise</p><h4 id="6-2-MAX-or-Complete-Linkage"><a href="#6-2-MAX-or-Complete-Linkage" class="headerlink" title="6.2 MAX or Complete Linkage"></a>6.2 MAX or Complete Linkage</h4><p><strong>Definition: Proximity of two clusters is based on the two most distant points in the different clusters</strong></p><p>​– Determined by all pairs of points in the two clusters</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\MAX_1.png" style="zoom:50%;" /><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\MAX_2.png" style="zoom:50%;" /><p><strong>Strength:</strong> Less susceptible to noise</p><p><strong>Limitation:</strong>  • Tends to break large clusters; • Biased towards globular clusters</p><h4 id="6-3-Group-Average"><a href="#6-3-Group-Average" class="headerlink" title="6.3 Group Average"></a>6.3 Group Average</h4><p><strong>Definition: Proximity of two clusters is the average of pairwise proximity between points in the two clusters.</strong></p><p><img src="F:\hexo_install\hexo-blog\source_posts\多维数据挖掘6-9\group_1.png"></p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\group_2.png" style="zoom: 80%;" /><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\group_3.png" style="zoom: 80%;" /><p>Compromise between Single and Complete Link</p><p><strong>Strength:</strong> Less susceptible to noise</p><p><strong>Limitations:</strong> Biased towards globular clusters</p><h4 id="6-4-Ward’s-Method"><a href="#6-4-Ward’s-Method" class="headerlink" title="6.4 Ward’s Method"></a>6.4 Ward’s Method</h4><p><strong>Definition:</strong> Similarity of two clusters is based on the increase in squared error when two clusters are merged.</p><p>​–Similar to group average if distance between points is distance squared</p><p><strong>Strength:</strong> Less susceptible to noise</p><p><strong>Limitations:</strong> Biased towards globular clusters</p><p>Hierarchical analogue of K-means<br>– Can be used to initialize K-means</p><h3 id="7-Time-and-Space-requirements"><a href="#7-Time-and-Space-requirements" class="headerlink" title="7. Time and Space requirements"></a>7. Time and Space requirements</h3><p>O(N2) space since it uses the proximity matrix.<br>    – N is the number of points.</p><p>O(N3) time in many cases<br>    – There are N-1 steps and at each step the proximity matrix of size N2 must be updated and searched<br>    – Complexity can be reduced to O(N2 log(N) ) time with some cleverness</p><h3 id="8-Problems-and-Limitations"><a href="#8-Problems-and-Limitations" class="headerlink" title="8. Problems and Limitations"></a>8. Problems and Limitations</h3><p>Once a decision is made to combine two clusters, it cannot be undone.</p><p>No global objective function is directly minimized</p><p>Different schemes have problems with one or more of the following:<br>        – Sensitivity to noise<br>        – Difficulty handling clusters of different sizes and non-globular shapes<br>        – Breaking large clusters</p><h3 id="9-Density-Based-Clustering"><a href="#9-Density-Based-Clustering" class="headerlink" title="9. Density Based Clustering"></a>9. Density Based Clustering</h3><p>(1) Clusters are regions of high density that are separated from one another by regions of low density.</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\DBSCAN_1.png" style="zoom:67%;" /><p>(2) DBSCAN: Core, Border and Noise Points</p><p>(3)</p><p><strong>When DBSCAN Works Well:</strong> </p><p>​• Can handle clusters of different shapes and sizes<br>​• Resistant to noise</p><p><strong>When DBSCAN Does NOT Work Well:</strong></p><p>• Varying densities<br>• High-dimensional data</p><h3 id="10-Cluster-Validity"><a href="#10-Cluster-Validity" class="headerlink" title="10. Cluster Validity"></a>10. Cluster Validity</h3><p>(1) <strong>Supervised</strong>:  Used to measure the extent to which cluster labels match externally supplied class labels.</p><p> Entropy<br> Often called external indices because they use information external to the data</p><p>(2)<strong>Unsupervised:</strong> Used to measure the goodness of a clustering structure without respect to external information. </p><p> Sum of Squared Error (SSE)<br> Often called internal indices because they only use information in the data</p><h3 id="11-Unsupervised-Measures-Cohesion-and-Separation-内聚与分离"><a href="#11-Unsupervised-Measures-Cohesion-and-Separation-内聚与分离" class="headerlink" title="11. Unsupervised Measures: Cohesion and Separation(内聚与分离)"></a>11. Unsupervised Measures: Cohesion and Separation(内聚与分离)</h3><p>(1) Cluster Cohesion: Measures how closely related are objects in a cluster – SSE</p><p>(2) Cluster Separation: Measure how distinct or wellseparated a cluster is from other clusters</p><p>(3) Squared Error:</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\SSE_1.png" style="zoom: 80%;" /><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\SSE_2.png" style="zoom:67%;" /><p>TSS &#x3D; SSE + SSB</p><p>TSS is the total sum of squares</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\SSE_3.png" style="zoom:67%;" /><p>(4) </p><p>A proximity graph-based approach can also be used for cohesion and separation.<br>– Cluster cohesion is the sum of the weight of all links within a cluster.<br>– Cluster separation is the sum of the weights between nodes in the cluster and nodes outside the cluster</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\SSE_4.png" style="zoom:50%;" /><h3 id="12-Silhouette-Coefficient"><a href="#12-Silhouette-Coefficient" class="headerlink" title="12. Silhouette Coefficient"></a>12. Silhouette Coefficient</h3><p>(1) Silhouette coefficient combines ideas of both cohesion and separation, but for individual points, as well as clusters and clusterings.</p><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\SSE_5.png" style="zoom: 67%;" /><h3 id="13-Measuring-Cluster-Validity-Via-Correlation"><a href="#13-Measuring-Cluster-Validity-Via-Correlation" class="headerlink" title="13. Measuring Cluster Validity Via Correlation"></a>13. Measuring Cluster Validity Via Correlation</h3><img src="F:\hexo_install\hexo-blog\source\_posts\多维数据挖掘6-9\MeasureCluster_1.png" style="zoom:67%;" /><h3 id="14-Determining-the-Correct-Number-of-Clusters"><a href="#14-Determining-the-Correct-Number-of-Clusters" class="headerlink" title="14. Determining the Correct Number of Clusters"></a>14. Determining the Correct Number of Clusters</h3><p> SSE is good for comparing two clusterings or two clusters</p><p> SSE can also be used to estimate the number of clusters</p><h3 id="15-Supervised-Measures-of-Cluster-Validity-Entropy-and-Purity"><a href="#15-Supervised-Measures-of-Cluster-Validity-Entropy-and-Purity" class="headerlink" title="15.Supervised Measures of Cluster Validity: Entropy and Purity"></a>15.Supervised Measures of Cluster Validity: Entropy and Purity</h3><p><img src="F:\hexo_install\hexo-blog\source_posts\多维数据挖掘6-9\Entropy_Purity_1.png"></p><h1 id="Chapter-07-Anomaly-Detection"><a href="#Chapter-07-Anomaly-Detection" class="headerlink" title="Chapter 07: Anomaly Detection"></a>Chapter 07: Anomaly Detection</h1><h3 id="1-anomalies-outliers"><a href="#1-anomalies-outliers" class="headerlink" title="1.  anomalies&#x2F;outliers"></a>1.  anomalies&#x2F;outliers</h3><p>The set of data points that are considerably different from the remainder of the data</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>多维数据挖掘</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>专业课</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>测试文章</title>
+    <link href="/2024/03/12/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
+    <url>/2024/03/12/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    
+    <content type="html"><![CDATA[<p>测试文章</p><img src="/2024/03/12/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/test.jpg" class="" title="图片引用方法测试">]]></content>
+    
+    
+    <categories>
+      
+      <category>Blog_Test</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2024/03/12/hello-world/"/>
+    <url>/2024/03/12/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
